@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>张三 · 个人主页</title>
+  <style>
+    :root {
+      /* Apple 配色 */
+      --ink: #1d1d1f;        /* 主墨色：标题、正文、按钮文字 */
+      --gray-mid: #707070;   /* 次级文字 */
+      --gray-deep: #474747;  /* 导航文字 */
+      --hairline: #d6d6d6;   /* 细线（极少使用） */
+      --canvas-gray: #f5f5f7;/* 交替区块背景 */
+      --paper: #ffffff;      /* 卡片、主背景 */
+      --wash: #e8e8ed;       /* 悬停表面 */
+      --nav-bg: #fafafc;     /* 导航滚动后 */
+      --blue: #0071e3;       /* 唯一强调色：实心按钮 */
+      --link: #0066cc;       /* 内联链接 */
+      --ember: #b64400;      /* 徽标 */
+
+      --radius-card: 28px;
+      --radius-pill: 980px;
+      --max-width: 1200px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: "SF Pro Text", "SF Pro Display", -apple-system,
+        BlinkMacSystemFont, "Inter", "PingFang SC", "Hiragino Sans GB",
+        "Microsoft YaHei", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: -0.022em;
+      line-height: 1.47;
+      font-feature-settings: "numr";
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* ---------- 全局导航 ---------- */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      z-index: 100;
+      transition: background 0.3s;
+    }
+
+    nav.scrolled {
+      background: var(--nav-bg);
+    }
+
+    nav .container {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--gray-deep);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+    }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      background: var(--paper);
+      padding-top: 44px;
+      padding-bottom: 80px;
+      text-align: center;
+    }
+
+    .hero .container {
+      padding-top: 80px;
+    }
+
+    .eyebrow {
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.022em;
+    }
+
+    .hero h1 {
+      font-family: "SF Pro Display", -apple-system, "Inter", "PingFang SC",
+        "Microsoft YaHei", system-ui, sans-serif;
+      font-size: clamp(40px, 8vw, 96px);
+      font-weight: 700;
+      line-height: 1.04;
+      letter-spacing: -1.44px;
+      margin: 12px 0 16px;
+    }
+
+    .hero .subtitle {
+      font-size: 21px;
+      font-weight: 400;
+      letter-spacing: 0.011em;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+
+    .hero .desc {
+      max-width: 620px;
+      margin: 0 auto 32px;
+      color: var(--gray-mid);
+      font-size: 17px;
+      letter-spacing: -0.022em;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 64px;
+    }
+
+    /* 胶囊按钮 */
+    .btn {
+      display: inline-block;
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: -0.022em;
+      padding: 11px 24px;
+      border-radius: var(--radius-pill);
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #0077ed;
+    }
+
+    .btn-ghost {
+      color: var(--ink);
+      border: 1px solid var(--ink);
+      background: transparent;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    /* Hero 视觉区（模拟产品渲染区） */
+    .hero-visual {
+      max-width: 1000px;
+      margin: 0 auto;
+      border-radius: var(--radius-card);
+      background: linear-gradient(184deg, #1d1d1f 20%, #0000f9 76%, #252525 95%);
+      padding: 100px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 340px;
+    }
+
+    .hero-visual .monogram {
+      font-family: "SF Pro Display", -apple-system, "PingFang SC",
+        "Microsoft YaHei", system-ui, sans-serif;
+      font-size: clamp(48px, 6vw, 72px);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .hero-visual .caption {
+      margin-top: 16px;
+      font-size: 17px;
+      color: rgba(255, 255, 255, 0.72);
+      letter-spacing: -0.022em;
+    }
+
+    /* ---------- 通用区块 ---------- */
+    section {
+      padding: 100px 0;
+    }
+
+    .section-head {
+      margin-bottom: 48px;
+    }
+
+    .section-head .kicker {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ember);
+      letter-spacing: 0;
+      margin-bottom: 8px;
+    }
+
+    .section-head h2 {
+      font-family: "SF Pro Display", -apple-system, "Inter", "PingFang SC",
+        "Microsoft YaHei", system-ui, sans-serif;
+      font-size: clamp(28px, 3.5vw, 40px);
+      font-weight: 600;
+      letter-spacing: 0.007em;
+      line-height: 1.14;
+      color: var(--ink);
+    }
+
+    .section-head p {
+      margin-top: 12px;
+      font-size: 21px;
+      letter-spacing: 0.011em;
+      color: var(--gray-mid);
+      max-width: 640px;
+    }
+
+    /* 交替背景：关于我 / 项目 用灰色 */
+    .band-gray {
+      background: var(--canvas-gray);
+    }
+
+    /* ---------- 关于我 ---------- */
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--paper);
+      border-radius: var(--radius-card);
+      padding: 32px;
+    }
+
+    .card .icon {
+      font-size: 28px;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .card h3 {
+      font-family: "SF Pro Display", -apple-system, "Inter", "PingFang SC",
+        "Microsoft YaHei", system-ui, sans-serif;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 0;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: var(--gray-mid);
+      font-size: 17px;
+      letter-spacing: -0.022em;
+    }
+
+    .card p a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    .card p a:hover {
+      text-decoration: underline;
+    }
+
+    /* ---------- 技能 ---------- */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 32px 40px;
+    }
+
+    .skill-item .name {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+      font-size: 17px;
+      letter-spacing: -0.022em;
+    }
+
+    .skill-item .name span:last-child {
+      color: var(--gray-mid);
+      font-size: 14px;
+    }
+
+    .bar {
+      height: 6px;
+      background: var(--wash);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: var(--blue);
+      border-radius: 10px;
+    }
+
+    /* ---------- 项目 ---------- */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .project-card {
+      background: var(--paper);
+      border-radius: var(--radius-card);
+      padding: 40px 32px;
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .project-card h3 {
+      font-family: "SF Pro Display", -apple-system, "Inter", "PingFang SC",
+        "Microsoft YaHei", system-ui, sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: 0;
+      margin-bottom: 12px;
+    }
+
+    .project-card p {
+      color: var(--gray-mid);
+      font-size: 17px;
+      letter-spacing: -0.022em;
+      margin-bottom: 20px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      padding: 6px 16px;
+      border-radius: var(--radius-pill);
+      background: var(--wash);
+      color: var(--ink);
+    }
+
+    /* ---------- 联系 ---------- */
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: flex-start;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--link);
+      font-size: 21px;
+      font-weight: 400;
+      letter-spacing: 0.011em;
+      text-decoration: none;
+    }
+
+    .contact-link .arrow {
+      font-size: 24px;
+      line-height: 1;
+      transition: transform 0.2s;
+    }
+
+    .contact-link:hover {
+      text-decoration: underline;
+    }
+
+    .contact-link:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    .contact-note {
+      margin-top: 24px;
+      color: var(--gray-mid);
+      font-size: 17px;
+      letter-spacing: -0.022em;
+    }
+
+    /* ---------- 页脚 ---------- */
+    footer {
+      background: var(--canvas-gray);
+      padding: 40px 0;
+    }
+
+    footer .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 24px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-size: 12px;
+      color: var(--gray-mid);
+      letter-spacing: 0;
+    }
+
+    footer .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    footer .footer-links a {
+      font-size: 12px;
+      color: var(--gray-deep);
+      text-decoration: none;
+    }
+
+    footer .footer-links a:hover {
+      color: var(--link);
+      text-decoration: underline;
+    }
+
+    /* ---------- 响应式 ---------- */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 20px;
+      }
+
+      section {
+        padding: 72px 0;
+      }
+
+      .hero .container {
+        padding-top: 48px;
+      }
+
+      .hero-visual {
+        padding: 64px 24px;
+        min-height: 240px;
+      }
+
+      .nav-links {
+        gap: 16px;
+      }
+
+      .nav-links a {
+        font-size: 11px;
+      }
+
+      .contact-links {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 导航栏 -->
+  <nav id="navbar">
+    <div class="container">
+      <div class="logo">张三</div>
+      <ul class="nav-links">
+        <li><a href="#home">首页</a></li>
+        <li><a href="#about">关于我</a></li>
+        <li><a href="#skills">技能</a></li>
+        <li><a href="#projects">项目</a></li>
+        <li><a href="#contact">联系</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero" id="home">
+    <div class="container">
+      <p class="eyebrow">个人主页</p>
+      <h1>你好，我是张三。</h1>
+      <p class="subtitle">全栈开发工程师 · 终身学习者</p>
+      <p class="desc">热爱创造和分享，专注于构建简洁、优雅且实用的产品，用代码解决真实世界的问题。</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">查看作品</a>
+        <a href="#contact" class="btn btn-ghost">联系我</a>
+      </div>
+      <div class="hero-visual">
+        <div class="monogram">张三</div>
+        <p class="caption">创造 · 分享 · 成长</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- 关于我 -->
+  <section id="about" class="band-gray">
+    <div class="container">
+      <div class="section-head">
+        <p class="kicker">Nuevo</p>
+        <h2>关于我</h2>
+        <p>简单介绍一下自己，以及我所坚持的事情。</p>
+      </div>
+      <div class="about-grid">
+        <div class="card">
+          <div class="icon">🎯</div>
+          <h3>我的目标</h3>
+          <p><a href="https://mp.weixin.qq.com/s/bQ9YcsiFbgfOSkzyZjUXfA" target="_blank" rel="noopener">致力于打造优秀的软件产品，让技术更好地服务人们的生活，持续创造价值。</a></p>
+        </div>
+        <div class="card">
+          <div class="icon">💡</div>
+          <h3>我的理念</h3>
+          <p>保持好奇心，不断学习。相信简洁是复杂的最终形式，追求高质量的代码和体验。</p>
+        </div>
+        <div class="card">
+          <div class="icon">🚀</div>
+          <h3>我的经历</h3>
+          <p>拥有多年的软件开发经验，参与过多个大型项目，涵盖 Web、移动端和云服务等领域。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 技能 -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-head">
+        <h2>专业技能</h2>
+        <p>在这些领域，我有一定的积累。</p>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-item">
+          <div class="name"><span>HTML / CSS</span><span>90%</span></div>
+          <div class="bar"><div class="bar-fill" style="width: 90%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="name"><span>JavaScript</span><span>85%</span></div>
+          <div class="bar"><div class="bar-fill" style="width: 85%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="name"><span>Python</span><span>80%</span></div>
+          <div class="bar"><div class="bar-fill" style="width: 80%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="name"><span>Vue / React</span><span>75%</span></div>
+          <div class="bar"><div class="bar-fill" style="width: 75%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="name"><span>数据库</span><span>70%</span></div>
+          <div class="bar"><div class="bar-fill" style="width: 70%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="name"><span>DevOps</span><span>65%</span></div>
+          <div class="bar"><div class="bar-fill" style="width: 65%"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 项目 -->
+  <section id="projects" class="band-gray">
+    <div class="container">
+      <div class="section-head">
+        <h2>我的项目</h2>
+        <p>一些我做过的作品。</p>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card">
+          <h3>个人博客系统</h3>
+          <p>一个基于 Markdown 的轻量级博客系统，支持全文搜索、标签分类和暗色主题，写作体验流畅。</p>
+          <div class="tags">
+            <span class="tag">Vue</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">MongoDB</span>
+          </div>
+        </div>
+        <div class="project-card">
+          <h3>数据可视化平台</h3>
+          <p>实时数据监控与可视化仪表盘，支持多数据源接入、自定义图表和告警通知。</p>
+          <div class="tags">
+            <span class="tag">React</span>
+            <span class="tag">D3.js</span>
+            <span class="tag">WebSocket</span>
+          </div>
+        </div>
+        <div class="project-card">
+          <h3>移动端应用</h3>
+          <p>一款帮助用户管理日常习惯的应用，界面简洁、提醒智能，广受好评。</p>
+          <div class="tags">
+            <span class="tag">Flutter</span>
+            <span class="tag">Firebase</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 联系 -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-head">
+        <h2>联系我</h2>
+        <p>欢迎交流与合作。</p>
+      </div>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:hello@example.com">邮箱 hello@example.com <span class="arrow">›</span></a>
+        <a class="contact-link" href="#contact">微信 my_wechat_id <span class="arrow">›</span></a>
+        <a class="contact-link" href="https://github.com" target="_blank">GitHub @yourname <span class="arrow">›</span></a>
+      </div>
+      <p class="contact-note">期待与你一起，做出更好的产品。</p>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer>
+    <div class="container">
+      <p>© 2025 张三 · 用心打造</p>
+      <div class="footer-links">
+        <a href="#home">首页</a>
+        <a href="#about">关于我</a>
+        <a href="#contact">联系</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 导航栏滚动状态
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 10) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
