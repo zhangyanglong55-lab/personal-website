@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 依赖
+node_modules/
+
+# 构建产物
+dist/
+build/
+
+# 日志
+*.log
+
+# 系统
+Thumbs.db
