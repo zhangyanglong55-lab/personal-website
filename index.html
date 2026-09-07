@@ -389,6 +389,15 @@
       color: var(--ink);
     }
 
+    .project-card { display: flex; flex-direction: column; }
+    .project-card .project-status { font-size: 14px; margin: 20px 0; }
+    .project-actions { display: flex; flex-wrap: wrap; gap: 12px 20px; margin-top: auto; }
+    .project-actions a { color: var(--link); font-size: 16px; text-decoration: none; }
+    .project-actions a:hover { text-decoration: underline; }
+    .project-actions a:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
+    #projects { scroll-margin-top: 44px; }
+    @media (max-width: 360px) { .projects-grid { grid-template-columns: minmax(0, 1fr); } }
+
     /* ---------- 联系 ---------- */
     .contact-links {
       display: flex;
@@ -602,35 +611,53 @@
     <div class="container">
       <div class="section-head">
         <h2>我的项目</h2>
-        <p>一些我做过的作品。</p>
+        <p>从桌面知识工作流、医疗质控到电商内容生产，查看产品官网、功能演示与项目源码。</p>
       </div>
       <div class="projects-grid">
-        <div class="project-card">
-          <h3>个人博客系统</h3>
-          <p>一个基于 Markdown 的轻量级博客系统，支持全文搜索、标签分类和暗色主题，写作体验流畅。</p>
+        <article class="project-card">
+          <h3>哇塞超级桌面</h3>
+          <p>将文件、文件夹与知识库组织到无限画布，通过连线限定 AI 分析范围，让资料、证据与生成结果在同一工作空间中持续积累。</p>
           <div class="tags">
-            <span class="tag">Vue</span>
-            <span class="tag">Node.js</span>
-            <span class="tag">MongoDB</span>
+            <span class="tag">AI 无限画布</span>
+            <span class="tag">本地优先</span>
+            <span class="tag">知识工作流</span>
           </div>
-        </div>
-        <div class="project-card">
-          <h3>数据可视化平台</h3>
-          <p>实时数据监控与可视化仪表盘，支持多数据源接入、自定义图表和告警通知。</p>
+          <p class="project-status">macOS 产品体验阶段，协作为预览能力。</p>
+          <div class="project-actions">
+            <a href="https://s1n3229blq1cs95ovo3u5.apigateway-cn-beijing.volceapi.com/" target="_blank" rel="noopener noreferrer" aria-label="哇塞超级桌面：产品官网与演示（新窗口）">产品官网与演示 ↗</a>
+            <a href="https://github.com/zhangyanglong55-lab/wow-super-desktop" target="_blank" rel="noopener noreferrer" aria-label="哇塞超级桌面：查看源码（新窗口）">查看源码 ↗</a>
+          </div>
+        </article>
+        <article class="project-card">
+          <h3>口腔病历质检助手</h3>
+          <p>面向口腔机构的 Chrome / Edge 扩展，聚合病历、收费与处置等七类页面信息，生成带证据来源和处理建议的风险报告。</p>
           <div class="tags">
-            <span class="tag">React</span>
-            <span class="tag">D3.js</span>
-            <span class="tag">WebSocket</span>
+            <span class="tag">浏览器扩展</span>
+            <span class="tag">医疗质控</span>
+            <span class="tag">DeepSeek</span>
           </div>
-        </div>
-        <div class="project-card">
-          <h3>移动端应用</h3>
-          <p>一款帮助用户管理日常习惯的应用，界面简洁、提醒智能，广受好评。</p>
+          <p class="project-status">桌面浏览器测试版；需机构授权和自备 Key，结果供人工复核。</p>
+          <div class="project-actions">
+            <a href="https://s7uc6h94okbt94isul5sj.apigateway-cn-beijing.volceapi.com/" target="_blank" rel="noopener noreferrer" aria-label="口腔病历质检助手：产品官网与演示（新窗口）">产品官网与演示 ↗</a>
+            <a href="https://s7uc6h94okbt94isul5sj.apigateway-cn-beijing.volceapi.com/#download" target="_blank" rel="noopener noreferrer" aria-label="口腔病历质检助手：下载测试版（新窗口）">下载测试版 ↗</a>
+            <a href="https://github.com/zhangyanglong55-lab/oral-clinical-risk-assistant" target="_blank" rel="noopener noreferrer" aria-label="口腔病历质检助手：查看源码（新窗口）">查看源码 ↗</a>
+          </div>
+        </article>
+        <article class="project-card">
+          <h3>LUMERA 电商视觉工场</h3>
+          <p>面向服饰电商的 AI 内容制作平台，将商品净图、真人试穿与动态商拍串成分步确认的制作流程，展示从商品原图到图像与视频的产品方案。</p>
           <div class="tags">
-            <span class="tag">Flutter</span>
-            <span class="tag">Firebase</span>
+            <span class="tag">AIGC</span>
+            <span class="tag">电商视觉</span>
+            <span class="tag">分步制作</span>
           </div>
-        </div>
+          <p class="project-status">提供制作工作台入口，视频模板区目前待发布。</p>
+          <div class="project-actions">
+            <a href="https://sprac7j0celj4h6aavsh7.apigateway-cn-beijing.volceapi.com/" target="_blank" rel="noopener noreferrer" aria-label="LUMERA 电商视觉工场：产品官网与演示（新窗口）">产品官网与演示 ↗</a>
+            <a href="https://sprac7j0celj4h6aavsh7.apigateway-cn-beijing.volceapi.com/studio" target="_blank" rel="noopener noreferrer" aria-label="LUMERA 电商视觉工场：进入制作工作台（新窗口）">进入制作工作台 ↗</a>
+            <a href="https://github.com/zhangyanglong55-lab/lumera-fashion-studio" target="_blank" rel="noopener noreferrer" aria-label="LUMERA 电商视觉工场：查看源码（新窗口）">查看源码 ↗</a>
+          </div>
+        </article>
       </div>
     </div>
   </section>
